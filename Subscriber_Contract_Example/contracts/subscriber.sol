@@ -18,6 +18,7 @@ contract Subscriber {
     address provider;
     bytes32 endpoint;
     uint256 query_id;
+    string[] public response;
 
     event ReceiveResponse(uint256 indexed id, int indexed result);
 
@@ -61,9 +62,25 @@ contract Subscriber {
 
     //Implementing callback that will accept provider's respondIntArray
     //Response method options  are  :respondBytes32Array, respondIntArray, respond1, respond2, respond3, respond4
-    function callback(uint256 _id, int _response) external{
+    function callback(uint256 _id, string calldata _response) external{
+        response.length = 0;
         require(_id==query_id,"Wrong query Id");
-        emit ReceiveResponse(_id,_response);
+        response.push(_response);
+        //Implement your logic with _response data here
+    }
+    function callback(uint256 _id, string calldata _response1, string calldata _response2) external{
+        response.length = 0;
+        require(_id==query_id,"Wrong query Id");
+        response.push(_response1);
+        response.push(_response2);
+        //Implement your logic with _response data here
+    }
+    function callback(uint256 _id, string calldata _response1,string calldata _response2,string calldata _response3 ) external{
+        response.length = 0;
+        require(_id==query_id,"Wrong query Id");
+        response.push(_response1);
+        response.push(_response2);
+        response.push(_response3);
         //Implement your logic with _response data here
     }
 
